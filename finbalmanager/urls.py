@@ -3,5 +3,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-	path('', views.addExpenseEarningView,name='addexpenseearning')
+	path('', views.finbalMasterView,name='finbalmasterview')
 ]

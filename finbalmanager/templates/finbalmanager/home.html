@@ -22,6 +22,8 @@
                     <a class="btn-outline-info nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">FinBal</a>
                     <a class="btn-outline-dark nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">+ Add Expense</a>
                     <a class="btn-outline-dark nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">+ Add Earning</a>
+                    <a class="btn-outline-dark nav-link" id="v-pills-expenselist-tab" data-toggle="pill" href="#v-pills-expenselist" role="tab" aria-controls="v-pills-expenselist" aria-selected="false">Expense List</a>
+                    <a class="btn-outline-dark nav-link" id="v-pills-earninglist-tab" data-toggle="pill" href="#v-pills-earninglist" role="tab" aria-controls="v-pills-earninglist" aria-selected="false">Earning List</a>
                     <a class="btn-outline-dark nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
                   </div>
                 </div>
@@ -32,20 +34,21 @@
                         <div id="container-fluid" >
                             <div class="col">
                             <div class="row">
-                                <canvas id="myChart" width="100" height="40"></canvas>
+                                <canvas id="myChart0" width="100" height="30"></canvas>
+                                
 
                             </div>
                             
                             <div class="row">
                             <div class="col">
-                                <canvas id="myChart0" width="100" height="100"></canvas>
+                                <canvas id="myChart" width="80" height="100"></canvas>
                             </div>
                          
                             <div class="col">
-                                <canvas id="myChart1" width="100" height="100"></canvas>
+                                <canvas id="myChart1" width="80" height="100"></canvas>
                             </div>
                             <div class="col">
-                                <canvas id="myChart2" width="100" height="100"></canvas>
+                                <canvas id="myChart2" width="80" height="100"></canvas>
                             </div>
                         </div>
                         </div>
@@ -66,7 +69,7 @@ var chart = new Chart(ctx, {
             label: 'Profit/Loss Chart',
             backgroundColor: ['rgb(0, 205, 132)', 'rgb(205, 0, 0)', 'rgb(0, 0, 0)', 'rgb(0, 0, 0)', 'rgb(20, 56, 220)'],
             // 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(0, 0, 0)',
             data: [{{totalEarning|safe}},{{totalExpense|safe}},{{profit|safe}}]
         }]
     },
@@ -93,7 +96,7 @@ var chart = new Chart(ctx, {
             label: 'Budget Allocation',
             backgroundColor: ['rgb(255, 99, 132)', 'rgb(255, 190, 132)', 'rgb(255, 99, 255)', 'rgb(50, 99, 132)', 'rgb(20, 56, 220)'],
             // 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(0, 0, 0)',
             data: {{budgetAllocated|safe}}
         }]
     },
@@ -120,7 +123,7 @@ var chart = new Chart(ctx, {
             label: 'Expenses Amounts',
             backgroundColor: ['rgb(255, 0, 0)','rgb(225, 0, 0)','rgb(155, 0, 0)','rgb(125, 0, 0)','rgb(100, 0, 0)'],
             // 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(0, 0, 0)',
             data: {{headExpenses|safe}}
         }]
     },
@@ -151,7 +154,7 @@ var chart = new Chart(ctx, {
             label: 'Earning Amounts',
             backgroundColor: ['rgb(0,255, 0)','rgb(0,205, 0)','rgb(0,155, 0)','rgb(0,125, 0)','rgb(0,100, 0)'],
             // 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(0, 0, 0)',
             data: {{headEarnings|safe}}
         }]
     },
@@ -195,6 +198,66 @@ var chart = new Chart(ctx, {
                             <!-- <button type="button" class="btn btn-dark btn-lg" id="regstudio">Show Toast</button>  -->
                         </form>
                     </div>
+                    <div class="tab-pane fade" id="v-pills-expenselist" role="tabpanel" aria-labelledby="v-pills-expenselist-tab">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Expense Date</th>
+                                <th scope="col">Budget Head</th>
+                                <th scope="col">Expense Head</th>
+                                <th scope="col">Expense Amount</th>
+                                <th scope="col">Expense Tax Amount</th>
+                                <th scope="col">Expense Comments</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                        {%for expense in expenselist%}
+                            <tr>
+                              <th scope="row">{{expense.expense_date}}</th>
+                              <td>{{expense.budget_head}}</td>
+                              <td>{{expense.expense_head}}</td>
+                              <td>{{expense.expense_amount}}</td>
+                              <td>{{expense.expense_tax_amt}}</td>
+                              <td>{{expense.expense_comments}}</td>
+                            </tr>
+                            
+                        
+                        {%endfor%}
+                    </tbody>
+                </table>
+
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-earninglist" role="tabpanel" aria-labelledby="v-pills-earninglist-tab">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Earning Date</th>
+                                <th scope="col">Budget Head</th>
+                                <th scope="col">Earning Head</th>
+                                <th scope="col">Earning Amount</th>
+                                <th scope="col">Earning Tax Amount</th>
+                                <th scope="col">Earning Comments</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                        {%for earning in earninglist%}
+                            <tr>
+                              <th scope="row">{{earning.earning_date}}</th>
+                              <td>{{earning.budget_head}}</td>
+                              <td>{{earning.earning_head}}</td>
+                              <td>{{earning.earning_amount}}</td>
+                              <td>{{earning.earning_tax_amt}}</td>
+                              <td>{{earning.earning_comments}}</td>
+                            </tr>
+                            
+                        
+                        {%endfor%}
+                    </tbody>
+                </table>
+
+                    </div>
+
+
                     <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
                   </div>
                 </div>

@@ -4,7 +4,7 @@ from .models import BudgetDetails,ExpenseDetails,EarningDetails
 
 
 # Create your views here.
-def addExpenseEarningView(request,*args,**kwargs):
+def finbalMasterView(request,*args,**kwargs):
 # getting budget details
     budget_heads=BudgetDetails.objects.all()
     heads=[]
@@ -30,9 +30,10 @@ def addExpenseEarningView(request,*args,**kwargs):
     headEarnings=[]
     for head in budget_heads:
         head_earning=earnings.filter(budget_head=head)
+        earning_amt=0
         if(len(head_earning)>0):
             for earning in head_earning:
-                earning_amt=float(earning.earning_amount+earning.earning_tax_amt)
+                earning_amt=earning_amt+float(earning.earning_amount+earning.earning_tax_amt)
             headEarnings.append(earning_amt)
         else:
             headEarnings.append(0.0)
@@ -69,5 +70,7 @@ def addExpenseEarningView(request,*args,**kwargs):
     'headEarnings':headEarnings,
     'totalEarning':totalEarning,
     'totalExpense':totalExpense,
-    'profit':profit
+    'profit':profit,
+    'earninglist':earnings,
+    'expenselist':expenses
     })  
